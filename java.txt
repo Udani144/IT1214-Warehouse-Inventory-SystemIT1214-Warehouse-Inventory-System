@@ -1,0 +1,112 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Item {
+    String name;
+    int quantity;
+
+    Item(String name, int quantity) {
+        this.name = name;
+        this.quantity = quantity;
+    }
+}
+
+public class Warehouse {
+    static ArrayList<Item> inventory = new ArrayList<>();
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int choice;
+
+        do {
+            System.out.println("\n--- Warehouse Menu ---");
+            System.out.println("1. Add Item");
+            System.out.println("2. Remove Item");
+            System.out.println("3. Update Quantity");
+            System.out.println("4. Search Item");
+            System.out.println("5. View All Items");
+            System.out.println("6. Exit");
+            System.out.print("Enter choice: ");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); // clear buffer
+
+            switch (choice) {
+                case 1:
+                    addItem();
+                    break;
+                case 2:
+                    removeItem();
+                    break;
+                case 3:
+                    updateItem();
+                    break;
+                case 4:
+                    searchItem();
+                    break;
+                case 5:
+                    displayItems();
+                    break;
+                case 6:
+                    System.out.println("Exiting program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 6);
+    }
+
+    static void addItem() {
+        System.out.print("Enter item name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter quantity: ");
+        int qty = scanner.nextInt();
+
+        inventory.add(new Item(name, qty));
+        System.out.println("Item added successfully!");
+    }
+
+    static void removeItem() {
+        System.out.print("Enter item name to remove: ");
+        String name = scanner.nextLine();
+
+        boolean found = false;
+
+        for (Item item : inventory) {
+            if (item.name.equalsIgnoreCase(name)) {
+                inventory.remove(item);
+                found = true;
+                System.out.println("Item removed!");
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Item not found!");
+        }
+    }
+
+    static void updateItem() {
+        System.out.print("Enter item name to update: ");
+        String name = scanner.nextLine();
+
+        for (Item item : inventory) {
+            if (item.name.equalsIgnoreCase(name)) {
+                System.out.print("Enter new quantity: ");
+                item.quantity = scanner.nextInt();
+                System.out.println("Quantity updated!");
+                return;
+            }
+        }
+
+        System.out.println("Item not found!");
+    }
+
+    static void searchItem() {
+        System.out.print("Enter item name to search: ");
+        String name = scanner.nextLine();
+
+        for (Item item : inventory) {
+            if (item.name.equalsIgnore
